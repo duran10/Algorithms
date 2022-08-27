@@ -242,22 +242,7 @@ for index, row in workers_df.iterrows():
 
 
 
-
-# 'Example Spreadsheet' needs to already exist and your user must have access to it
-s = Spread('jordan@tuki.today', 'Database January 2019 version')  
-#output = Spread('jordan@tuki.today' , 'Database January 2019 version Output') 
-# This will ask to authenticate if you haven't done so before for 'example_user'
-
-# Display available worksheets
-#print(s.sheets)
-
-s.open_sheet('recruitment') 
-#df = pd.read_excel('Database January 2019 version.xlsx', sheetname='recruitment')
-#Database January 2019 version
-df=s.sheet_to_df(index=None) 
-
-
-recruit_df=pd.DataFrame(df)
+recruit_df=pd.read_csv(filename)
 
 
 ##If the data series is extracted in any other way many of the variable types get corrupted, so we extract based on index
