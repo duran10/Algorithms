@@ -13,26 +13,7 @@ import math
 import copy
 
 startTime = datetime.now()
-#file_name = "http://stats.idre.ucla.edu/stat/data/binary.csv"
-#df = pd.read_csv(file_name)
-
-# 'Example Spreadsheet' needs to already exist and your user must have access to it
-s = Spread('erick.duran.tuki@gmail.com', 'Database January 2019 version')  
-#output = Spread('erick.duran.tuki@gmail.com' , 'Database January 2019 version Output') 
-
-
-# This will ask to authenticate if you haven't done so before for 'example_user'
-
-# Display available worksheets
-#print(s.sheets)
-
-s.open_sheet('main') 
-
-df=s.sheet_to_df(index=None) 
-#print(df.head())
-
-workers_df=pd.DataFrame(df)
-
+workers_df = pd.read_csv(file_name)
 
 
 data_source_list = ['typeform', 'test']
