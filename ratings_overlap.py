@@ -6,22 +6,8 @@ from sqlalchemy import create_engine
 import numpy as np
 from itertools import chain, zip_longest
 
-start_time = datetime.now()
-engine = create_engine('postgresql+psycopg2://postgres:T9fbeAz4#hYKHV@67xM%q7bw9@35.198.66.183:5432/app_analytics')
-conn = psycopg2.connect(
-    "dbname='app_analytics' user='postgres' host='35.198.66.183' password='T9fbeAz4#hYKHV@67xM%q7bw9'")
-cur = conn.cursor()
 
-sql = f"""
-select r."assigneeId",r."shiftId", s."venueId",r."startTime",r."endTime", r.management, r.overall, r.teamwork 
-from ratings r
-inner join shift s on r."shiftId"=s."shiftid"
-group by r."assigneeId",r."shiftId", s."venueId",r."startTime",r."endTime", r.management, r.overall, r.teamwork 
-order by  s."venueId", r."startTime" 
-
- """
-ratings_df = pd.read_sql_query(sql, conn)
-start_time2 = datetime.now()
+ratings_df = pd.read_csv(filename)
 
 ratings_df1= ratings_df.copy()
 start = ratings_df1['startTime']
@@ -151,20 +137,7 @@ ratings_df1['overall'] = ratings_df['overall']
 ratings_df1['teamwork'] = ratings_df['teamwork']
 
 # Export dataframe to excel
-##overlap_ratings_excel = ratings_df1.to_excel('Overlap_ratings.xlsx', index=True, header=True)
+overlap_ratings_excel = ratings_df1.to_excel('Overlap_ratings.xlsx', index=True, header=True)
 
-print("Time taken before sql read", (datetime.now() - start_time).total_seconds())
-print("Time taken after sql read", (datetime.now() - start_time2).total_seconds())
-
-# Export dataframe to postgres
-cur = conn.cursor()
-cur.execute('DROP TABLE IF EXISTS "overlap_ratings";')
-conn.commit()
-
-ratings_df1.to_sql('overlap_ratings', engine)
-
-if (conn):
-    cur.close()
-    conn.close()
 
 print("Script done")
